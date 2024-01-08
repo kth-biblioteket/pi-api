@@ -1,0 +1,11 @@
+node_modules
+*.log
+.env
+*.env
+.DS_Store
+*.db
+test.js
+dev
+Dockerfile-dev
+docker-compose-dev.yml
+package-dev.json

@@ -1,0 +1,25 @@
+version: "3.6"
+
+services:
+  pi-api:
+    container_name: "pi-api"
+    image: ghcr.io/kth-biblioteket/pi-api:${REPO_TYPE}
+    restart: "always"
+    environment:
+      TZ: ${TZ}
+    env_file:
+      - ./pi-api.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pi-api.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`${PATHPREFIX}`)"
+      - "traefik.http.routers.pi-api.middlewares=pi-api-stripprefix"
+      - "traefik.http.middlewares.pi-api-stripprefix.stripprefix.prefixes=${PATHPREFIX}"
+      - "traefik.http.routers.pi-api.entrypoints=websecure"
+      - "traefik.http.routers.pi-api.tls=true"
+      - "traefik.http.routers.pi-api.tls.certresolver=myresolver"
+    networks:
+      - "apps-net"
+
+networks:
+  apps-net:
+    external: true
