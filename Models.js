@@ -42,7 +42,7 @@ const readAllUsersWithPagination = (page, perPage) => {
           currentPage: page,
           error: `Invalid page. Page must be between 1 and ${totalPages}.`
         };
-        reject(response);
+        resolve(response);
         return;
       }
 
