@@ -21,18 +21,18 @@ const readAllusers = () => {
 };
 
 // Hämta alla användare med paginering
-const readAllUsersWithPagination = (page, itemsPerPage) => {
+const readAllUsersWithPagination = (page, perPage) => {
   return new Promise(async function (resolve, reject) {
     try {
-      const offset = (page - 1) * itemsPerPage;
+      const offset = (page - 1) * perPage;
 
-      itemsPerPage = parseInt(itemsPerPage, 10);
+      perPage = parseInt(perPage, 10);
 
       const totalCountQuery = 'SELECT COUNT(*) as total FROM personal';
       const totalCountResult = await queryAsync(totalCountQuery);
       const totalItems = totalCountResult[0].total;
 
-      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const totalPages = Math.ceil(totalItems / perPage);
 
       if (page < 1 || page > totalPages) {
         reject(new Error(`Invalid page. Page must be between 1 and ${totalPages}.`));
@@ -48,7 +48,7 @@ const readAllUsersWithPagination = (page, itemsPerPage) => {
                   ORDER BY p.KTH_id, p.Anst_nuv_bef, p.Fil_datum
                   LIMIT ?, ?`;
 
-      const result = await queryAsync(database.mysql.format(sql, [offset, itemsPerPage]));
+      const result = await queryAsync(database.mysql.format(sql, [offset, perPage]));
       const response = {
         totalItems,
         data: result,
