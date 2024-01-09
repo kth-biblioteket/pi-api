@@ -4,14 +4,12 @@ const database = require('./db');
 const readAllusers = () => {
   return new Promise(function (resolve, reject) {
     const sql = `SELECT p.KTH_id,CONCAT(p.Enamn,', ',p.Fnamn) AS Namn,
-                    (SELECT DISTINCT ok.ORCIDid FROM orcid_kthid ok WHERE ok.KTH_id = p.KTH_id) AS ORCIDid,(SELECT DISTINCT o1.Orgnamn 
-                    FROM organisation o1 
-                    WHERE o1.Orgkod = p.Orgkod) AS Orgnamn,
-                  (SELECT DISTINCT o2.Orgnamn 
-                   FROM organisation o2 
-                   WHERE o2.Orgkod = p.Skol_kod) AS Skola,
-                   p.Bef_ben AS Befattning,p.Anst_nuv_bef AS Fr,p.Bef_t_o_m AS Till,p.Fil_datum AS Datum 
-                   FROM personal p`;
+                (SELECT DISTINCT ok.ORCIDid FROM orcid_kthid ok WHERE ok.KTH_id = p.KTH_id) AS ORCIDid,
+                (SELECT DISTINCT o1.Orgnamn FROM organisation o1 WHERE o1.Orgkod = p.Orgkod) AS Orgnamn,
+                (SELECT DISTINCT o2.Orgnamn FROM organisation o2 WHERE o2.Orgkod = p.Skol_kod) AS Skola,
+                p.Bef_ben AS Befattning,p.Anst_nuv_bef AS Fr,p.Bef_t_o_m AS Till,p.Fil_datum AS Datum 
+                FROM personal p
+                ORDER BY p.KTH_id, p.Anst_nuv_bef, p.Fil_datum`;
     database.db.query(database.mysql.format(sql, []), (err, result) => {
       if (err) {
         console.error(err);
