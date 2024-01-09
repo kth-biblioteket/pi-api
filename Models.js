@@ -78,7 +78,6 @@ const readUsers = (fnamn, enamn) => {
                 p.Enamn LIKE ?
                 AND o1.Orgkod = p.Orgkod ORDER BY p.Enamn, p.Fnamn, p.Anst_nuv_bef, p.Fil_datum`
 
-                console.log(database.mysql.format(sql, [fnamn, enamn]))
     database.db.query(database.mysql.format(sql, [fnamn, enamn]), (err, result) => {
       if (err) {
         console.error(err);

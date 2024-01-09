@@ -4,10 +4,10 @@ const eventModel = require('./Models');
 
 async function readAllusers(req, res) {
     try {
-        if (req.query.page && req.query.perPage) {
+        if (req.query.page && req.query.per_page) {
             // Pagination parameters provided, fetch paginated results
             const page = req.query.page || 1;
-            const perPage = req.query.perPage || 10;
+            const perPage = req.query.per_page || 10;
 
             let result = await eventModel.readAllUsersWithPagination(page, perPage);
             res.send(result);
