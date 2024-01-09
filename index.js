@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 const socketIo = require("socket.io");
+const verifyToken = require('./VerifyToken');
 
 app.set("view engine", "ejs");
 
@@ -34,7 +35,7 @@ apiRoutes.get("/", async function (req, res, next) {
 	res.json('Welcome to KTH Biblioteket PI api')
 });
 
-apiRoutes.get("/allusers", Controller.readAllusers)
+apiRoutes.get("/allusers", verifyToken, Controller.readAllusers)
 
 apiRoutes.get("/users", Controller.readUsers)
 

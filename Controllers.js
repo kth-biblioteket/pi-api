@@ -23,6 +23,7 @@ async function readAllusers(req, res) {
 
 async function readUsers(req, res) {
     try {
+        console.log(req.query)
         let result = await eventModel.readUsers(req.query.fnamn, req.query.enamn)
         res.send(result)
     } catch (err) {
