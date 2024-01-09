@@ -35,7 +35,14 @@ const readAllUsersWithPagination = (page, perPage) => {
       const totalPages = Math.ceil(totalItems / perPage);
 
       if (page < 1 || page > totalPages) {
-        reject(new Error(`Invalid page. Page must be between 1 and ${totalPages}.`));
+        const response = {
+          totalItems,
+          data: [],
+          totalPages,
+          currentPage: page,
+          error: `Invalid page. Page must be between 1 and ${totalPages}.`
+        };
+        reject(response);
         return;
       }
 
