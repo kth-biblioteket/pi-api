@@ -74,11 +74,11 @@ const readAllUsersWithPagination = (page, perPage) => {
 //Hämta alla användare
 const readUsers = (fnamn, enamn) => {
   return new Promise(function (resolve, reject) {
-    const sql = `SELECT p.KTH_id,CONCAT(p.Enamn,', ',p.Fnamn) AS Namn,
+    const sql = `SELECT p.KTH_id,p.Enamn,p.Fnamn,
                 (SELECT ok.ORCIDid FROM orcid_kthid ok WHERE ok.KTH_id = p.KTH_id) AS ORCIDid,
-                o1.Orgnamn AS Orgnamn,
+                o1.Orgnamn,
                 (SELECT o2.Orgnamn FROM organisation o2 WHERE o2.Orgkod = p.Skol_kod) AS Skola,
-                p.Bef_ben AS Befattning,p.Anst_nuv_bef AS Fr,p.Bef_t_o_m AS Till,p.Fil_datum AS Datum 
+                p.Bef_ben, p.Anst_nuv_bef,p.Bef_t_o_m ,p.Fil_datum AS datum 
                 FROM personal p, organisation o1 WHERE 
                 p.Fnamn LIKE ?
                 AND 
