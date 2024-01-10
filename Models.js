@@ -77,7 +77,7 @@ const readUsers = (fnamn, enamn) => {
     const sql = `SELECT p.KTH_id,p.Enamn,p.Fnamn,
                 (SELECT ok.ORCIDid FROM orcid_kthid ok WHERE ok.KTH_id = p.KTH_id) AS ORCIDid,
                 o1.Orgnamn,
-                (SELECT o2.Orgnamn FROM organisation o2 WHERE o2.Orgkod = p.Skol_kod) AS Skola,
+                (SELECT o2.Orgnamn FROM organisation o2 WHERE o2.Orgkod = p.Skol_kod) AS skola,
                 p.Bef_ben, p.Anst_nuv_bef,p.Bef_t_o_m ,p.Fil_datum AS datum 
                 FROM personal p, organisation o1 WHERE 
                 p.Fnamn LIKE ?
