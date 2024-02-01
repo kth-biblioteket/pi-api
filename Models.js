@@ -84,7 +84,7 @@ const readUsers = (fnamn, enamn) => {
                 AND 
                 p.Enamn LIKE ?
                 AND o1.Orgkod = p.Orgkod 
-                ORDER BY p.Fil_datum, p.Enamn, p.Fnamn, p.Anst_nuv_bef`
+                ORDER BY p.Fil_datum DESC, p.Enamn, p.Fnamn, p.Anst_nuv_bef`
 
     database.db.query(database.mysql.format(sql, [fnamn, enamn]), (err, result) => {
       if (err) {
