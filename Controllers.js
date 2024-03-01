@@ -23,7 +23,11 @@ async function readAllusers(req, res) {
 
 async function readUsers(req, res) {
     try {
-        let result = await eventModel.readUsers(req.query.fname, req.query.ename)
+        // Hantera avslutande wildcard(speciellt för tecken som å ä ö)
+        const fname = req.query.fname.endsWith('%') ? decodeURIComponent(req.query.fname.slice(0, -1)) + '%' : req.query.fname;
+        const ename = req.query.ename.endsWith('%') ? decodeURIComponent(req.query.ename.slice(0, -1)) + '%' : req.query.ename;
+    
+        let result = await eventModel.readUsers(fname, ename)
         res.send(result)
     } catch (err) {
         res.send("error: " + err)
